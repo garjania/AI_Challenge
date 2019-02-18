@@ -6,13 +6,20 @@ from Game import Search
 
 class AI:
 
+    counter = 0
+
     def preprocess(self, world):
         print("preprocess")
 
     def pick(self, world):
-        print("pick")
-        hero_names = [hero_name for hero_name in Model.HeroName]
-        world.pick_hero(hero_names[randint(0, len(hero_names) - 1)])
+        self.counter += 1
+        print("pick", self.counter)
+        if self.counter < 3:
+            world.pick_hero(Model.HeroName.SENTRY)
+        if self.counter == 3:
+            world.pick_hero(Model.HeroName.GUARDIAN)
+        if self.counter > 3:
+            world.pick_hero(Model.HeroName.BLASTER)
 
     def move(self, world):
         print("move")
@@ -24,7 +31,6 @@ class AI:
                     break
         for hero in world.my_heroes:
             world.move_hero(hero=hero, direction=Search().search(hero, world.map, row, col))
-
     def action(self, world):
         print("action")
         for hero in world.my_heroes:
