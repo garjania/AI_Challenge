@@ -1,6 +1,5 @@
 import Model
 from random import randint
-
 from Game import Search
 
 
@@ -20,7 +19,7 @@ class AI:
         for i in range(4):
             row = self.zone[randint(0, len(self.zone) - 1)][0]
             col = self.zone[randint(0, len(self.zone) - 1)][1]
-            self.go.append([row,col])
+            self.go.append([row, col])
         print("preprocess")
 
     def pick(self, world):
@@ -35,12 +34,15 @@ class AI:
 
     def move(self, world):
         print("move")
-        i=0
+        i = 0
         for hero in world.my_heroes:
-            row=self.go[i][0]
-            col=self.go[i][1]
-            world.move_hero(hero=hero, direction=Search().search(hero, world.map, row, col))
-            i+=1
+            row = self.go[i][0]
+            col = self.go[i][1]
+
+            if not (hero.current_cell.row == row and hero.current_cell.column == col) and hero.current_cell.row != -1 and hero.current_cell.column != -1:
+                world.move_hero(hero=hero, direction=Search().search(hero, world.map, row, col))
+            i += 1
+
     def action(self, world):
         print("action")
         for hero in world.my_heroes:

@@ -26,12 +26,16 @@ class Search:
         q.put(this_code)
         visited[this_code] = -1
 
+        counter = 0
+
         while True:
             code = q.get()
             crow, ccol = self.decode(code, world_map)
 
-            if crow == row and ccol == col:
+            if (crow == row and ccol == col) or counter > world_map.row_num*world_map.column_num:
                 break
+
+            counter += 1
 
             arr = [[crow-1, ccol], [crow, ccol-1], [crow+1, ccol], [crow, ccol+1]]
 
